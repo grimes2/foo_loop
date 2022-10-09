@@ -7,7 +7,7 @@ static constexpr const char* component_name = "Loop";
 
 DECLARE_COMPONENT_VERSION(
 	component_name,
-	"1.3",
+	"1.2",
 	"grimes\n\n"
 	"Build: " __TIME__ ", " __DATE__
 );
