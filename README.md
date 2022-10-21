@@ -8,3 +8,6 @@ For `foobar2000` `v2` and newer: Repeat part of track.
 Requirements:
 * https://www.foobar2000.org/SDK
 * https://wtl.sourceforge.io/
+
+# Download Component
+* https://www.foobar2000.org/components/view/foo_loop
