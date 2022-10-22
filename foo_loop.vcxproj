@@ -82,7 +82,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\juerg\Documents\Visual Studio 2022\Code Snippets\Visual C++\My Code Snippets\foo_seek\foobar2000-sdk\wtl\Include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -180,14 +179,8 @@
     <ProjectReference Include="..\foobar2000-sdk\foobar2000\foobar2000_component_client\foobar2000_component_client.vcxproj">
       <Project>{71ad2674-065b-48f5-b8b0-e1f9d3892081}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\foobar2000-sdk\foobar2000\helpers\foobar2000_sdk_helpers.vcxproj">
-      <Project>{ee47764e-a202-4f85-a767-abdab4aff35f}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\foobar2000-sdk\foobar2000\SDK\foobar2000_SDK.vcxproj">
       <Project>{e8091321-d79d-4575-86ef-064ea1a4a20d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\foobar2000-sdk\libPPUI\libPPUI.vcxproj">
-      <Project>{7729eb82-4069-4414-964b-ad399091a03f}</Project>
     </ProjectReference>
     <ProjectReference Include="..\foobar2000-sdk\pfc\pfc.vcxproj">
       <Project>{ebfffb4e-261d-44d3-b89c-957b31a0bf9c}</Project>
