@@ -177,9 +177,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="resource.hpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\foobar2000-sdk\foobar2000\foobar2000_component_client\foobar2000_component_client.vcxproj">
       <Project>{71ad2674-065b-48f5-b8b0-e1f9d3892081}</Project>
     </ProjectReference>
@@ -195,9 +192,6 @@
     <ProjectReference Include="..\foobar2000-sdk\pfc\pfc.vcxproj">
       <Project>{ebfffb4e-261d-44d3-b89c-957b31a0bf9c}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="foo_loop.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="foo_loop.cpp" />

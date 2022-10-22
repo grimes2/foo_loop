@@ -1,13 +1,13 @@
 #define _WIN32_WINNT _WIN32_WINNT_WIN7
 #define WINVER _WIN32_WINNT_WIN7
 
-#include <helpers/foobar2000+atl.h>
+#include <foobar2000/SDK/foobar2000.h>
 
 static constexpr const char* component_name = "Loop";
 
 DECLARE_COMPONENT_VERSION(
 	component_name,
-	"1.3",
+	"1.4",
 	"grimes\n\n"
 	"Build: " __TIME__ ", " __DATE__
 );
