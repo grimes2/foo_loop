@@ -10,3 +10,6 @@ Requirements:
 
 # Download Component
 * https://www.foobar2000.org/components/view/foo_loop
+
+# Download foobar2000
+* https://www.foobar2000.org/download
