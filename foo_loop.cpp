@@ -180,7 +180,7 @@ public:
 
 static mainmenu_commands_factory_t<mainmenu_commands_loop> g_mainmenu_commands_loop;
 
-class play_callback_seek : public play_callback_static
+class play_callback_loop : public play_callback_static
 {
 public:
 	unsigned get_flags() { return flag_on_playback_stop; }
@@ -198,4 +198,4 @@ public:
 	virtual void on_playback_time(double p_time) {}
 	virtual void on_volume_change(float p_new_val) {}
 };
-static play_callback_static_factory_t<play_callback_seek> g_play_callback_seek;
+static play_callback_static_factory_t<play_callback_loop> g_play_callback_loop;
