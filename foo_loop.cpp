@@ -23,10 +23,10 @@ double loop_length;
 bool menu_loop_enabled = false;
 
 VOID CALLBACK LoopTimer(
-	HWND hwnd,        // handle to window for timer messages
-	UINT message,     // WM_TIMER message
+	HWND,        // handle to window for timer messages
+	UINT,     // WM_TIMER message
 	UINT idEvent1,     // timer identifier
-	DWORD dwTime)     // current system time
+	DWORD)     // current system time
 {
 	if (menu_loop_enabled)
 	{
@@ -119,7 +119,7 @@ public:
 				loop_position_end = static_api_ptr_t<playback_control>()->playback_get_position();
 				static_api_ptr_t<playback_control>()->playback_seek(loop_position_start);
 				loop_length = loop_position_end - loop_position_start;
-				ptr2 = SetTimer(NULL, ID_TIMER2, loop_length * 1000, (TIMERPROC)LoopTimer);
+				ptr2 = SetTimer(NULL, ID_TIMER2, (UINT)loop_length * 1000, (TIMERPROC)LoopTimer);
 				console::info("End playback time of loop");
 			}
 		}
@@ -169,7 +169,7 @@ public:
 	}
 	virtual t_uint32 get_sort_priority()
 	{
-		return sort_priority_dontcare;
+		return 0x80000000;
 	}
 	bool is_checked(t_uint32 p_index)
 	{
@@ -184,18 +184,18 @@ class play_callback_loop : public play_callback_static
 {
 public:
 	unsigned get_flags() { return flag_on_playback_stop; }
-	virtual void on_playback_seek(double p_time) {}
-	virtual void on_playback_new_track(metadb_handle_ptr p_track) {}
-	virtual void on_playback_stop(play_control::t_stop_reason p_reason) {
+	virtual void on_playback_seek(double) {}
+	virtual void on_playback_new_track(metadb_handle_ptr) {}
+	virtual void on_playback_stop(play_control::t_stop_reason) {
 		if (menu_loop_enabled)
 			KillTimer(NULL, ptr2);
 	}
-	virtual void on_playback_pause(bool p_state) {}
-	virtual void on_playback_starting(play_control::t_track_command p_command, bool p_paused) {}
-	virtual void on_playback_edited(metadb_handle_ptr p_track) {}
-	virtual void on_playback_dynamic_info(const file_info& info) {}
-	virtual void on_playback_dynamic_info_track(const file_info& info) {}
-	virtual void on_playback_time(double p_time) {}
-	virtual void on_volume_change(float p_new_val) {}
+	virtual void on_playback_pause(bool) {}
+	virtual void on_playback_starting(play_control::t_track_command, bool) {}
+	virtual void on_playback_edited(metadb_handle_ptr) {}
+	virtual void on_playback_dynamic_info(const file_info&) {}
+	virtual void on_playback_dynamic_info_track(const file_info&) {}
+	virtual void on_playback_time(double) {}
+	virtual void on_volume_change(float) {}
 };
 static play_callback_static_factory_t<play_callback_loop> g_play_callback_loop;
