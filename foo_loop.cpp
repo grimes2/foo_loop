@@ -84,11 +84,11 @@ public:
 	virtual bool get_description(t_uint32 p_index, pfc::string_base& p_out)
 	{
 		if (p_index == 0)
-			p_out = "Set start playback time of loop";
+			p_out = "Set start playback time of loop.";
 		else if (p_index == 1)
-			p_out = "Set end playback time of loop";
+			p_out = "Set end playback time of loop.";
 		else if (p_index == 2)
-			p_out = "Toogle loop";
+			p_out = "Toogle loop.";
 		else
 			return false;
 		return true;
