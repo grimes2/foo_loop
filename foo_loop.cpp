@@ -88,7 +88,7 @@ public:
 		else if (p_index == 1)
 			p_out = "Set end playback time of loop.";
 		else if (p_index == 2)
-			p_out = "Toogle loop.";
+			p_out = "Toggle loop.";
 		else
 			return false;
 		return true;
@@ -184,6 +184,7 @@ class play_callback_loop : public play_callback_static
 {
 public:
 	unsigned get_flags() { return flag_on_playback_stop; }
+
 	virtual void on_playback_seek(double) {}
 	virtual void on_playback_new_track(metadb_handle_ptr) {}
 	virtual void on_playback_stop(play_control::t_stop_reason) {
