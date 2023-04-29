@@ -109,6 +109,7 @@ public:
 			if (menu_loop_enabled)
 			{
 				loop_position_start = static_api_ptr_t<playback_control>()->playback_get_position();
+				KillTimer(NULL, ptr2);
 				console::info("Start playback time of loop");
 			}
 		}
@@ -119,6 +120,7 @@ public:
 				loop_position_end = static_api_ptr_t<playback_control>()->playback_get_position();
 				static_api_ptr_t<playback_control>()->playback_seek(loop_position_start);
 				loop_length = loop_position_end - loop_position_start;
+				KillTimer(NULL, ptr2);
 				ptr2 = SetTimer(NULL, ID_TIMER2, (UINT)loop_length * 1000, (TIMERPROC)LoopTimer);
 				FB2K_console_formatter() << "End playback time of loop, Loop length: " << loop_length << "s";
 			}
@@ -183,9 +185,13 @@ static mainmenu_commands_factory_t<mainmenu_commands_loop> g_mainmenu_commands_l
 class play_callback_loop : public play_callback_static
 {
 public:
-	unsigned get_flags() { return flag_on_playback_stop; }
+	unsigned get_flags() { return flag_on_playback_stop | flag_on_playback_seek; }
 
-	virtual void on_playback_seek(double) {}
+	virtual void on_playback_seek(double p_time) {
+		if (loop_length > 0) {
+			loop_position_start = p_time;
+		}
+	}
 	virtual void on_playback_new_track(metadb_handle_ptr) {}
 	virtual void on_playback_stop(play_control::t_stop_reason) {
 		if (menu_loop_enabled)
