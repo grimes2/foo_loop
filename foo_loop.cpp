@@ -120,7 +120,7 @@ public:
 				static_api_ptr_t<playback_control>()->playback_seek(loop_position_start);
 				loop_length = loop_position_end - loop_position_start;
 				ptr2 = SetTimer(NULL, ID_TIMER2, (UINT)loop_length * 1000, (TIMERPROC)LoopTimer);
-				console::info("End playback time of loop");
+				FB2K_console_formatter() << "End playback time of loop, Loop length: " << loop_length << "s";
 			}
 		}
 		if (p_index == 2)
