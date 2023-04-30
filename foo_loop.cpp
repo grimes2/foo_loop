@@ -7,7 +7,7 @@ static constexpr const char* component_name = "Loop";
 
 DECLARE_COMPONENT_VERSION(
 	component_name,
-	"1.5",
+	"1.6",
 	"grimes\n\n"
 	"Build: " __TIME__ ", " __DATE__
 );
@@ -185,19 +185,22 @@ static mainmenu_commands_factory_t<mainmenu_commands_loop> g_mainmenu_commands_l
 class play_callback_loop : public play_callback_static
 {
 public:
-	unsigned get_flags() { return flag_on_playback_stop | flag_on_playback_seek; }
+	unsigned get_flags() { return flag_on_playback_stop | flag_on_playback_pause; }
 
-	virtual void on_playback_seek(double p_time) {
-		if (loop_length > 0) {
-			loop_position_start = p_time;
-		}
-	}
+	virtual void on_playback_seek(double) {}
 	virtual void on_playback_new_track(metadb_handle_ptr) {}
 	virtual void on_playback_stop(play_control::t_stop_reason) {
-		if (menu_loop_enabled)
+		if (menu_loop_enabled) {
 			KillTimer(NULL, ptr2);
+			FB2K_console_formatter() << "Loop aborted";
+		}
 	}
-	virtual void on_playback_pause(bool) {}
+	virtual void on_playback_pause(bool paused) {
+		if (menu_loop_enabled && paused) {
+			KillTimer(NULL, ptr2);
+			FB2K_console_formatter() << "Loop aborted";
+		}
+	}
 	virtual void on_playback_starting(play_control::t_track_command, bool) {}
 	virtual void on_playback_edited(metadb_handle_ptr) {}
 	virtual void on_playback_dynamic_info(const file_info&) {}
