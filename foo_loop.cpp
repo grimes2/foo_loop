@@ -7,14 +7,14 @@ static constexpr const char* component_name = "Loop";
 
 DECLARE_COMPONENT_VERSION(
 	component_name,
-	"1.6",
+	"1.7",
 	"grimes\n\n"
 	"Build: " __TIME__ ", " __DATE__
 );
 
 VALIDATE_COMPONENT_FILENAME("foo_loop.dll");
 
-#define ID_TIMER2 1011
+constexpr auto ID_TIMER2 = 1011;
 
 UINT_PTR ptr2 = 0;
 double loop_position_end;
@@ -111,6 +111,7 @@ public:
 				loop_position_start = static_api_ptr_t<playback_control>()->playback_get_position();
 				KillTimer(NULL, ptr2);
 				console::info("Start playback time of loop");
+				FB2K_console_formatter() << "Start playback time of loop: " << loop_position_start << "s";
 			}
 		}
 		if (p_index == 1)
