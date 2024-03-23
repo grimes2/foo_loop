@@ -17,7 +17,7 @@ VALIDATE_COMPONENT_FILENAME("foo_loop.dll");
 constexpr auto ID_TIMER2 = 1011;
 
 UINT_PTR ptr2 = 0;
-double loop_position_end;
+double loop_position_end = 0.0;
 double loop_position_start;
 double loop_length;
 bool menu_loop_enabled = false;
@@ -28,13 +28,13 @@ VOID CALLBACK LoopTimer(
 	UINT idEvent1,     // timer identifier
 	DWORD)     // current system time
 {
+	KillTimer(NULL, idEvent1);
+	ptr2 = 0;
+
 	if (menu_loop_enabled)
 	{
 		static_api_ptr_t<playback_control>()->playback_seek(loop_position_start);
-	}
-	else
-	{
-		KillTimer(NULL, idEvent1);
+		ptr2 = SetTimer(NULL, ID_TIMER2, (UINT)(loop_length * 1000), (TIMERPROC)LoopTimer);
 	}
 }
 
@@ -109,7 +109,9 @@ public:
 			if (menu_loop_enabled)
 			{
 				loop_position_start = static_api_ptr_t<playback_control>()->playback_get_position();
+				loop_position_end = 0.0;
 				KillTimer(NULL, ptr2);
+				ptr2 = 0;
 				console::info("Start playback time of loop");
 				FB2K_console_formatter() << "Start playback time of loop: " << loop_position_start << "s";
 			}
@@ -122,7 +124,7 @@ public:
 				static_api_ptr_t<playback_control>()->playback_seek(loop_position_start);
 				loop_length = loop_position_end - loop_position_start;
 				KillTimer(NULL, ptr2);
-				ptr2 = SetTimer(NULL, ID_TIMER2, (UINT)loop_length * 1000, (TIMERPROC)LoopTimer);
+				ptr2 = SetTimer(NULL, ID_TIMER2, (UINT)(loop_length * 1000), (TIMERPROC)LoopTimer);
 				FB2K_console_formatter() << "End playback time of loop, Loop length: " << loop_length << "s";
 			}
 		}
@@ -193,13 +195,18 @@ public:
 	virtual void on_playback_stop(play_control::t_stop_reason) {
 		if (menu_loop_enabled) {
 			KillTimer(NULL, ptr2);
+			ptr2 = 0;
 			FB2K_console_formatter() << "Loop aborted";
 		}
 	}
 	virtual void on_playback_pause(bool paused) {
-		if (menu_loop_enabled && paused) {
-			KillTimer(NULL, ptr2);
-			FB2K_console_formatter() << "Loop aborted";
+		KillTimer(NULL, ptr2);
+		ptr2 = 0;
+
+		if (menu_loop_enabled && loop_position_end != 0.0 && !paused) {
+			double remaining = loop_position_end - static_api_ptr_t<playback_control>()->playback_get_position();
+			ptr2 = SetTimer(NULL, ID_TIMER2, (UINT)(remaining * 1000), (TIMERPROC)LoopTimer);
+			FB2K_console_formatter() << "Resuming loop. Time left: " << remaining << "s";
 		}
 	}
 	virtual void on_playback_starting(play_control::t_track_command, bool) {}
